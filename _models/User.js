@@ -3,7 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 const subscriptionSchema = mongoose.Schema({
     plan: { type: Number, required: false }, // premium or basic
-    bill: { type: Number, required: false }, // monthly or yearly
+    billing: { type: Number, required: false }, // monthly or yearly
     subscriptionDate: { type: Date, required: false },
     expirationDate: { type: Date, required: false },
     boosts: { type: [Date], required: false }, // array of expiration dates

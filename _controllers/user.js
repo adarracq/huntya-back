@@ -6,7 +6,8 @@ const sendEmail = require("../utils/email");
 exports.loginOrSignup = (req, res, next) => {
 
     const email = req.body.email;
-    const code = Math.floor(Math.random() * 1000000);
+    // create a 6 digits random code
+    const code = Math.floor(100000 + Math.random() * 900000);
 
     User.findOne({ email: email })
         .then(user => {
@@ -32,8 +33,12 @@ exports.loginOrSignup = (req, res, next) => {
                 sendEmail(user.email, "Code de verification", `Votre code de vérification est ${code}.`)
                     .then(() => {
                         user.code = code;
-                        user.save()
-                            .then(() => {
+                        // update user code
+                        User.findOneAndUpdate(
+                            { email: email },
+                            { code: code })
+                            .then((user) => {
+                                console.log(user);
                                 if (user.verified && user.firstname) {
                                     res.status(201).json({ message: 'login' });
                                 }
@@ -72,4 +77,25 @@ exports.verifyEmailCode = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error: 'Internal Error' }));
 };
+
+
+exports.updateUser = (req, res, next) => {
+    // remove _id from req.body.user
+    delete req.body.user._id;
+
+    console.log(req.body.user);
+
+    User.findOneAndUpdate(
+        { email: req.body.user.email },
+        { ...req.body.user },
+        { new: true })
+        .then((user) => {
+            res.status(201).json(user);
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(400).json({ error: 'Not Found' })
+        });
+}
+
 
