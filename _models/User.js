@@ -20,7 +20,7 @@ const agentSchema = mongoose.Schema({
     verifId: { type: String, required: false },
     badges: { type: [Number], required: false },
     subscription: { type: subscriptionSchema, required: false },
-
+    maxZones: { type: Number, required: false },
 });
 
 

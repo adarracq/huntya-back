@@ -79,6 +79,19 @@ exports.verifyEmailCode = (req, res, next) => {
 };
 
 
+exports.getUserByEmail = (req, res, next) => {
+
+    User.findOne({ email: req.params.email })
+        .then(user => {
+            if (!user) {
+                return res.status(401).json({ error: 'Not Found' });
+            }
+            res.status(201).json(user);
+        })
+        .catch(error => res.status(400).json({ error: 'Not Found' }));
+};
+
+
 exports.updateUser = (req, res, next) => {
     // remove _id from req.body.user
     delete req.body.user._id;
