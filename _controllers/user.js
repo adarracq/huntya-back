@@ -100,8 +100,8 @@ exports.updateUser = (req, res, next) => {
 
     User.findOneAndUpdate(
         { email: req.body.user.email },
-        { ...req.body.user },
-        { new: true })
+        { ...req.body.user })
+        //{ new: true })
         .then((user) => {
             res.status(201).json(user);
         })

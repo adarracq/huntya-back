@@ -8,6 +8,8 @@ const app = express();
 const projectRoutes = require('./_routes/project');
 const userRoutes = require('./_routes/user');
 const eventRoutes = require('./_routes/event');
+const zoneRoutes = require('./_routes/zone');
+
 mongoose.connect(process.env.MONGODB_URI,
     {
         useNewUrlParser: true,
@@ -28,6 +30,7 @@ app.use((req, res, next) => {
 app.use('/api/project', projectRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/event', eventRoutes);
+app.use('/api/zone', zoneRoutes);
 app.use('/_upload/images', express.static(path.join(__dirname, '_upload/images')));
 
 
