@@ -70,8 +70,8 @@ exports.verifyEmailCode = (req, res, next) => {
                 { email: req.body.email },
                 { verified: true })
                 //{ new: true })
-                .then(() => {
-                    res.status(201).json({ message: 'Code verified' });
+                .then((user) => {
+                    res.status(201).json({ message: 'Code verified', type: user.type });
                 })
                 .catch(error => res.status(400).json({ error: 'Not Found' }));
         })

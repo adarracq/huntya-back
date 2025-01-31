@@ -22,7 +22,6 @@ exports.getEventById = (req, res, next) => {
 }
 
 exports.createEvent = (req, res, next) => {
-    console.log(req.body);
     const event = new Event({ ...req.body });
     event.save()
         .then(() => { res.status(201).json({ message: 'Success' }) })
@@ -31,9 +30,14 @@ exports.createEvent = (req, res, next) => {
 
 exports.updateEvent = (req, res, next) => {
     Event.findOneAndUpdate(
-        { email: req.params.email },
-        { ...req.body },
-        { new: true })
+        { _id: req.params.id },
+        { ...req.body })
         .then((event) => res.status(200).json(event))
+        .catch(error => res.status(400).json({ error: 'Not Found' }));
+};
+
+exports.deleteEvent = (req, res, next) => {
+    Event.deleteOne({ _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Deleted' }))
         .catch(error => res.status(400).json({ error: 'Not Found' }));
 };

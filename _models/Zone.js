@@ -7,7 +7,9 @@ const zoneSchema = mongoose.Schema({
     centre: { type: [Number], required: true },
     population: { type: Number, required: true },
     departement: { type: String, required: true },
-    region: { type: String, required: true }
+    region: { type: String, required: true },
+    nbProjects: { type: Number, required: false, default: 0 },
+    nbContacts: { type: Number, required: false, default: 0 },
 });
 
 module.exports = mongoose.model('Zone', zoneSchema);

@@ -7,6 +7,7 @@ const multer = require('../_middlewares/multer-config');
 router.get('/:email', eventCtrl.getEventsByUserEmail);
 router.get('/id/:id', eventCtrl.getEventById);
 router.post('/', eventCtrl.createEvent);
-router.put('/:email', eventCtrl.updateEvent);
+router.put('/:id', eventCtrl.updateEvent);
+router.delete('/:id', eventCtrl.deleteEvent);
 
 module.exports = router;
