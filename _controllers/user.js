@@ -38,7 +38,6 @@ exports.loginOrSignup = (req, res, next) => {
                             { email: email },
                             { code: code })
                             .then((user) => {
-                                console.log(user);
                                 if (user.verified && user.firstname) {
                                     res.status(201).json({ message: 'login' });
                                 }
@@ -95,7 +94,6 @@ exports.getUserByEmail = (req, res, next) => {
 exports.updateUser = (req, res, next) => {
     // remove _id from req.body.user
     delete req.body.user._id;
-
     console.log(req.body.user);
 
     User.findOneAndUpdate(

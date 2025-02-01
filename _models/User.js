@@ -14,6 +14,7 @@ const subscriptionSchema = mongoose.Schema({
 const agentSchema = mongoose.Schema({
     workStatus: { type: Number, required: false }, // Salarié ou Indépendant
     network: { type: String, required: false },
+    url: { type: String, required: false },
     specialities: { type: [Number], required: false },
     experience: { type: Number, required: false }, // in yearss
     zonesId: { type: [Number], required: false },
