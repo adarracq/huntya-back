@@ -4,8 +4,8 @@ const projectSchema = mongoose.Schema({
     type: { type: Number, required: true }, // 0: achat 1: vente
     user_id: { type: String, required: true },
     user_firstname: { type: String, required: true },
+    user_email: { type: String, required: true },
     date: { type: Date, required: true },
-    tags: { type: [Number], required: true },
     categorie: { type: Number, required: true },
     nbRooms: { type: Number, required: false },
     nbBedrooms: { type: Number, required: false },
@@ -23,6 +23,8 @@ const projectSchema = mongoose.Schema({
     description: { type: String, required: false },
     zone: { type: Object, required: false },
     address: { type: Object, required: false },
+    addressString: { type: String, required: false },
+    coords: { type: Object, required: false },
     status: { type: String, required: true },
     isPublic: { type: Boolean, required: true },
 });
