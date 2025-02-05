@@ -6,10 +6,13 @@ exports.createProject = (req, res, next) => {
     const project = new Project({
         ...req.body
     });
-
+    console.log(project);
     project.save()
         .then(() => { res.status(201).json({ message: 'Projet enregistré !' }) })
-        .catch(error => { res.status(400).json({ error }) })
+        .catch(error => { 
+            console.log(error);
+            res.status(400).json({ error }) 
+        })
 };
 
 exports.getOneProject = (req, res, next) => {

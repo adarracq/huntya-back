@@ -19,3 +19,34 @@ exports.createMany = (req, res, next) => {
         .catch(error => { res.status(400).json({ error }) })
 }
 
+exports.getZoneFromCoords = (req, res, next) => {
+    console.log(req.body);
+    const { latitude, longitude } = req.body;
+   // we need to find if the coords are inside of a zone.contour
+   // and if it is, we return the zone and update nbProjects from the zone
+    // if it is not, we return an error message
+    Zone.find()
+        .then(zones => {
+            const zone = zones.find(zone => {
+                const contour = zone.contour;
+                let isInside = false;
+                for (let i = 0, j = contour.length - 1; i < contour.length; j = i++) {
+                    const xi = contour[i][0], yi = contour[i][1];
+                    const xj = contour[j][0], yj = contour[j][1];
+                    const intersect = ((yi > latitude) != (yj > latitude)) && (longitude < (xj - xi) * (latitude - yi) / (yj - yi) + xi);
+                    if (intersect) isInside = !isInside;
+                }
+                return isInside;
+            });
+            if (zone) {
+                console.log(zone.code);
+                zone.nbProjects += 1;
+                zone.save()
+                    .then(() => res.status(200).json(zone.code))
+                    .catch(error => res.status(400).json({ error }));
+            } else {
+                res.status(400).json({ message: 'Coords are not inside of any zone' });
+            }
+        })
+        .catch(error => res.status(400).json({ error }));
+}
