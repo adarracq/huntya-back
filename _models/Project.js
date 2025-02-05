@@ -5,6 +5,7 @@ const projectSchema = mongoose.Schema({
     user_id: { type: String, required: true },
     user_firstname: { type: String, required: true },
     user_email: { type: String, required: true },
+    user_imageUrl: { type: String, required: true },
     date: { type: Date, required: true },
     categorie: { type: Number, required: true },
     nbRooms: { type: Number, required: false },
