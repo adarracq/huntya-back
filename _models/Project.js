@@ -22,7 +22,7 @@ const projectSchema = mongoose.Schema({
     budgetMin: { type: Number, required: false },
     budgetMax: { type: Number, required: false },
     description: { type: String, required: false },
-    zone: { type: Object, required: false },
+    zoneCode: { type: String, required: false },
     address: { type: Object, required: false },
     addressString: { type: String, required: false },
     coords: { type: Object, required: false },

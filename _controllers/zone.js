@@ -6,6 +6,17 @@ exports.getAll = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 }
 
+exports.getMany = (req, res, next) => {
+    let zonesCodes = [];
+    req.body.forEach(zone => {
+        zonesCodes.push(zone);
+    });
+    console.log(zonesCodes);
+    Zone.find({ code: { $in: zonesCodes } })
+        .then(zones => res.status(200).json(zones))
+        .catch(error => res.status(400).json({ error }));
+}
+
 exports.create = (req, res, next) => {
     const zone = new Zone({ ...req.body });
     zone.save()
@@ -20,7 +31,6 @@ exports.createMany = (req, res, next) => {
 }
 
 exports.getZoneFromCoords = (req, res, next) => {
-    console.log(req.body);
     const { latitude, longitude } = req.body;
    // we need to find if the coords are inside of a zone.contour
    // and if it is, we return the zone and update nbProjects from the zone

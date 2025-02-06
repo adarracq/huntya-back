@@ -48,11 +48,11 @@ exports.getAllProjectsByUser = (req, res, next) => {
 exports.getProjectsInZones = (req, res, next) => {
     let zonesCodes = [];
     req.body.forEach(zone => {
-        zonesCodes.push(zone.code);
+        zonesCodes.push(zone);
     });
     Project.find({
-        'zone.code': { $in: zonesCodes },
-        isPublic: true
+        'zoneCode': { $in: zonesCodes },
+        //isPublic: true
     }).then(
         (projects) => {
             res.status(200).json(projects);
