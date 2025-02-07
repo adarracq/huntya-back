@@ -90,6 +90,18 @@ exports.getUserByEmail = (req, res, next) => {
         .catch(error => res.status(400).json({ error: 'Not Found' }));
 };
 
+exports.getAllAgents = (req, res, next) => {
+    console.log('getAllAgents');
+    User.find({ type: '1' })
+        .then(users => {
+            if (!users) {
+                return res.status(401).json({ error: 'Not Found' });
+            }
+            res.status(201).json(users);
+        })
+        .catch(error => res.status(400).json({ error: 'Not Found' }));
+}
+
 
 exports.updateUser = (req, res, next) => {
     // remove _id from req.body.user
