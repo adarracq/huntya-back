@@ -30,6 +30,25 @@ exports.createMany = (req, res, next) => {
         .catch(error => { res.status(400).json({ error }) })
 }
 
+// ajoutes aux zones du body un agent/contact/projet
+exports.addCAP = (req, res, next) => {
+    const { zones, type } = req.body;
+    zones.forEach(zone => {
+        Zone.findOne({ code: zone })
+            .then(zone => {
+                if (type === 'agent') {
+                    zone.nbAgents += 1;
+                } else if (type === 'contact') {
+                    zone.nbContacts += 1;
+                } else if (type === 'project') {
+                    zone.nbProjects += 1;
+                }
+                zone.save();
+            })
+    });
+    res.status(201).json({ message: 'Success' });
+}
+
 exports.getZoneFromCoords = (req, res, next) => {
     const { latitude, longitude } = req.body;
    // we need to find if the coords are inside of a zone.contour

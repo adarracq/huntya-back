@@ -8,5 +8,6 @@ router.put('/many', zoneCtrl.getMany);
 router.post('/', zoneCtrl.create);
 router.post('/many', zoneCtrl.createMany);
 router.put('/coords', zoneCtrl.getZoneFromCoords);
+router.put('/add', zoneCtrl.addCAP);
 
 module.exports = router;

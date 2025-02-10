@@ -10,6 +10,7 @@ const zoneSchema = mongoose.Schema({
     region: { type: String, required: true },
     nbProjects: { type: Number, required: false, default: 0 },
     nbContacts: { type: Number, required: false, default: 0 },
+    nbAgents: { type: Number, required: false, default: 0 },
 });
 
 module.exports = mongoose.model('Zone', zoneSchema);

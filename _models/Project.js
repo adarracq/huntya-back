@@ -23,11 +23,9 @@ const projectSchema = mongoose.Schema({
     budgetMax: { type: Number, required: false },
     description: { type: String, required: false },
     zoneCode: { type: String, required: false },
-    address: { type: Object, required: false },
     addressString: { type: String, required: false },
     coords: { type: Object, required: false },
     status: { type: String, required: true },
-    isPublic: { type: Boolean, required: true },
 });
 
 module.exports = mongoose.model('Project', projectSchema);
