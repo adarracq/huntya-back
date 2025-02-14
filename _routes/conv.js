@@ -8,5 +8,6 @@ router.get('/senderId=:senderId&receiverId=:receiverId', convCtrl.getConv);
 router.get('/user/:userId', convCtrl.getUserConvs);
 router.get('/read/:convId', convCtrl.readConv);
 router.post('/message', convCtrl.sendMessage);
+router.put('/report', convCtrl.reportConv);
 
 module.exports = router;

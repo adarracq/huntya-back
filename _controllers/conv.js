@@ -3,6 +3,7 @@ const fs = require('fs');
 const Conversation = require('../_models/Conversation');
 const e = require('express');
 const User = require('../_models/User');
+const sendEmail = require('../utils/email');
 
 
 exports.getConv = (req, res, next) => {
@@ -110,4 +111,14 @@ exports.sendMessage = async (req, res, next) => {
             //io2.emit(participant, message);
             console.log('message sent to', participant);
     });
+}
+
+exports.reportConv = (req, res, next) => {
+    sendEmail(process.env.USERMAIL, 'Signalement', 
+        'La conversation ' + req.body.convId + ' a été signalée par l\'utilisateur ' + req.body.userId
+        + '(' + req.body.firstname + ' ' + req.body.lastname + ')')
+    .then(() => {
+        res.status(200).json({ message: 'Conversation reported' });
+    })
+    .catch(error => res.status(400).json({ error }));
 }

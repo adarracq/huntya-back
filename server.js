@@ -3,7 +3,7 @@ const app = require('./app');
 const { Server } = require('socket.io');
 const Conversation = require('./_models/Conversation');
 const User = require('./_models/User');
-const WebSocket = require('ws');
+const Zone = require('./_models/Zone');
 
 const normalizePort = val => {
     const port = parseInt(val, 10);
@@ -93,6 +93,21 @@ io.on('connection', (socket) => {
 
             await user1.save();
             await user2.save();
+
+            // on incremente le champs nbContacts des zones de l'agent
+            user1.type == "1" ? user1.agentProperties.zoneCodes.forEach(zone => {
+                Zone.findOne({ code: zone })
+                    .then(zone => {
+                        zone.nbContacts += 1;
+                        zone.save();
+                    })
+            }) : user2.agentProperties.zoneCodes.forEach(zone => {
+                Zone.findOne({ code: zone })
+                    .then(zone => {
+                        zone.nbContacts += 1;
+                        zone.save();
+                    })
+            });
         }
 
         // Ajouter le message à la conversation

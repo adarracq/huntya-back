@@ -127,4 +127,14 @@ exports.updateUser = (req, res, next) => {
         });
 }
 
+exports.uploadPicture = (req, res, next) => {
+    console.log('uploadPicture', req.file);
+    User.findOneAndUpdate(
+        { email: req.params.email },
+        { imageUrl: `${req.protocol}://${req.get('host')}/_upload/images/${req.file.filename}` },
+        { new: true })
+        .then((user) => res.status(200).json(user))
+        .catch(error => res.status(400).json({ error: 'Not Found' }));
+
+};
 

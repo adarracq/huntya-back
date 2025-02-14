@@ -19,6 +19,7 @@ const agentSchema = mongoose.Schema({
     specialities: { type: [Number], required: false },
     experience: { type: Number, required: false }, // in yearss
     zoneCodes: { type: [String], required: false },
+    lastZoneUpdateDate: { type: Date, required: false },
     verifId: { type: String, required: false },
     badges: { type: [Number], required: false },
     subscription: { type: subscriptionSchema, required: false },
