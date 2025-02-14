@@ -26,6 +26,14 @@ const agentSchema = mongoose.Schema({
     maxZones: { type: Number, required: false },
 });
 
+// Image schema in MongoDB.
+const imageSchema = new mongoose.Schema({
+    name: {type: String, required: true, unique: true},
+    data: {type: Buffer, required: true},
+    contentType: {type: String, required: true},
+  });
+  
+
 
 const userSchema = mongoose.Schema({
     email: { type: String, required: true, unique: true },
@@ -42,6 +50,7 @@ const userSchema = mongoose.Schema({
     verified: { type: Boolean, required: true, default: false },
     friends: { type: [Object], required: false },
     agentProperties: { type: agentSchema, required: false },
+    image: { type: imageSchema, required: false },
 });
 
 userSchema.plugin(uniqueValidator);

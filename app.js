@@ -10,7 +10,6 @@ const projectRoutes = require('./_routes/project');
 const userRoutes = require('./_routes/user');
 const eventRoutes = require('./_routes/event');
 const zoneRoutes = require('./_routes/zone');
-const messageRoutes = require('./_routes/message');
 const convRoutes = require('./_routes/conv');
 
 mongoose.connect(process.env.MONGODB_URI,
@@ -40,7 +39,6 @@ app.use('/api/project', projectRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/event', eventRoutes);
 app.use('/api/zone', zoneRoutes);
-app.use('/api/message', messageRoutes);
 app.use('/api/conv', convRoutes);
 app.use('/_upload/images', express.static(path.join(__dirname, '_upload/images')));
 
