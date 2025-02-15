@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config()
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 
@@ -22,10 +23,15 @@ mongoose.connect(process.env.MONGODB_URI,
 
 app.use(express.json());
 
-/*const server2 = require('http').createServer(app);
-const io2 = require('socket.io')(server2);
-app.set('socketIO', io2);
-*/
+// Set up rate limiter: maximum of 100 requests per 2 minutes per IP
+const limiter = rateLimit({
+    windowMs: 2 * 60 * 1000, // 2 minutes
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 2 minutes)
+    message: "Too many requests from this IP, please try again after 15 minutes",
+  });
+  
+// Apply the rate limiter to all requests
+app.use(limiter);
 
 
 app.use((req, res, next) => {

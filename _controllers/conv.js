@@ -56,8 +56,6 @@ exports.readConv = (req, res, next) => {
 
 exports.sendMessage = async (req, res, next) => {
     const message = req.body;
-    //console.log('sendMessage', message);
-
     // Rechercher une conversation existante avec les participants
     let conversation = await Conversation.findOne({
         participants: { $all: message.participants, $size: message.participants.length }

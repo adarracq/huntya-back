@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const eventCtrl = require('../_controllers/event');
-const multer = require('../_middlewares/multer-config');
+const auth = require('../_middlewares/auth');
 
-router.get('/:email', eventCtrl.getEventsByUserEmail);
-router.get('/id/:id', eventCtrl.getEventById);
-router.post('/', eventCtrl.createEvent);
-router.put('/:id', eventCtrl.updateEvent);
-router.delete('/:id', eventCtrl.deleteEvent);
+router.get('/:email',auth, eventCtrl.getEventsByUserEmail);
+router.get('/id/:id',auth, eventCtrl.getEventById);
+router.post('/',auth, eventCtrl.createEvent);
+router.put('/:id',auth, eventCtrl.updateEvent);
+router.delete('/:id',auth, eventCtrl.deleteEvent);
 
 module.exports = router;

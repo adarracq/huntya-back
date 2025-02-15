@@ -6,7 +6,6 @@ exports.createProject = (req, res, next) => {
     const project = new Project({
         ...req.body
     });
-    console.log(project);
     project.save()
         .then(() => { res.status(201).json({ message: 'Projet enregistré !' }) })
         .catch(error => { 

@@ -55,14 +55,12 @@ io.on('connection', (socket) => {
     socket.on('connect', () => {
         console.log('Nouvel utilisateur connecté :', socket.id);
         if (!isConnected) {
-            console.log('Nouvel utilisateur connecté :', socket.id);
             isConnected = true;
         }
     });
 
     socket.on('sendMessage', async (messageData) => {
         const { participants, senderId, text } = messageData;
-        console.log('sendMessage', messageData);
 
         // Rechercher une conversation existante avec les participants
         let conversation = await Conversation.findOne({
@@ -83,12 +81,14 @@ io.on('connection', (socket) => {
                 firstname: user2.firstname,
                 lastname: user2.lastname,
                 email: user2.email,
+                imageUrl: user2.imageUrl,
             });
             user2.friends.push({
                 _id: user1._id,
                 firstname: user1.firstname,
                 lastname: user1.lastname,
                 email: user1.email,
+                imageUrl: user1.imageUrl,
             });
 
             await user1.save();

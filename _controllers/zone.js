@@ -11,7 +11,6 @@ exports.getMany = (req, res, next) => {
     req.body.forEach(zone => {
         zonesCodes.push(zone);
     });
-    console.log(zonesCodes);
     Zone.find({ code: { $in: zonesCodes } })
         .then(zones => res.status(200).json(zones))
         .catch(error => res.status(400).json({ error }));
@@ -68,7 +67,6 @@ exports.getZoneFromCoords = (req, res, next) => {
                 return isInside;
             });
             if (zone) {
-                console.log(zone.code);
                 zone.nbProjects += 1;
                 zone.save()
                     .then(() => res.status(200).json(zone.code))

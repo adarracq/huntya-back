@@ -22,7 +22,8 @@ exports.loginOrSignup = (req, res, next) => {
                     .then(() => {
                         sendEmail(user.email, "Code de verification", `Votre code de vérification est ${code}.`)
                             .then(() => {
-                                res.status(201).json({ message: 'signup' });
+                                const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+                                res.status(201).json({ message: 'signup', token: token });
                             })
                             .catch(error => res.status(400).json({ error: 'Email not sent' }));
                     })
@@ -38,11 +39,12 @@ exports.loginOrSignup = (req, res, next) => {
                             { email: email },
                             { code: code })
                             .then((user) => {
+                                const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
                                 if (user.verified && user.firstname) {
-                                    res.status(201).json({ message: 'login' });
+                                    res.status(201).json({ message: 'login', token: token });
                                 }
                                 else {
-                                    res.status(201).json({ message: 'signup' });
+                                    res.status(201).json({ message: 'signup', token: token });
                                 }
                             })
                             .catch(error => res.status(400).json({ error: 'Email not sent' }));
@@ -97,7 +99,6 @@ exports.getUserById = (req, res, next) => {
 }
 
 exports.getAllAgents = (req, res, next) => {
-    console.log('getAllAgents');
     User.find({ type: '1' })
         .then(users => {
             if (!users) {
@@ -112,7 +113,6 @@ exports.getAllAgents = (req, res, next) => {
 exports.updateUser = (req, res, next) => {
     // remove _id from req.body.user
     delete req.body.user._id;
-    console.log(req.body.user);
 
     User.findOneAndUpdate(
         { email: req.body.user.email },
@@ -128,7 +128,6 @@ exports.updateUser = (req, res, next) => {
 }
 
 exports.uploadPicture = (req, res, next) => {
-    console.log('cooucouuuuu', req.file);
     User.findOneAndUpdate(
         { email: req.params.email },
         { imageUrl: req.file.filename },
